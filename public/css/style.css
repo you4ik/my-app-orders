@@ -1,0 +1,14 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.container {
+    max-width: 800px;
+}
+.form-inline {
+    display: flex;
+    justify-content: center;
+}
+input, button {
+    margin: 5px;
+}

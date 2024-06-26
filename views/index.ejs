@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Order Tracker</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Order Tracker</h1>
+        <form action="/add" method="post" class="form-inline my-4">
+            <input type="text" name="name" placeholder="Order Name" class="form-control mr-2" required>
+            <input type="number" step="0.01" name="amount" placeholder="Order Amount" class="form-control mr-2" required>
+            <button type="submit" class="btn btn-primary">Add Order</button>
+        </form>
+        <h2>Orders</h2>
+        <ul class="list-group">
+            <% orders.forEach(order => { %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <%= order.name %>
+                <span class="badge badge-primary badge-pill">$<%= order.amount %></span>
+                <form action="/delete/<%= order.id %>" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm ml-2">Delete</button>
+                </form>
+                <button type="button" class="btn btn-warning btn-sm ml-2" data-toggle="modal" data-target="#editModal<%= order.id %>">Edit</button>
+                <!-- Modal -->
+                <div class="modal fade" id="editModal<%= order.id %>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel<%= order.id %>" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel<%= order.id %>">Edit Order</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/edit/<%= order.id %>" method="post">
+                                    <div class="form-group">
+                                        <label for="editName">Order Name</label>
+                                        <input type="text" class="form-control" id="editName" name="name" value="<%= order.name %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editAmount">Order Amount</label>
+                                        <input type="number" step="0.01" class="form-control" id="editAmount" name="amount" value="<%= order.amount %>" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <% }) %>
+        </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
